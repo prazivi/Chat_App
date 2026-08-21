@@ -1,3 +1,30 @@
+server:
+  port: 8081
+  # 0.0.0.0 = listen on ALL network interfaces
+  # Without this, only localhost can connect (other WiFi devices can't reach you)
+  address: 0.0.0.0
+
 spring:
-  application:
-    name: wifi-chat-backend
+  datasource:
+    # jdbc:postgresql://HOST:PORT/DATABASE_NAME
+    url: jdbc:postgresql://localhost:5432/wifi_chat
+    username: chatuser
+    password: chatpass123
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # "update" = auto-create/update tables based on your Java entity classes
+      # Use "create-drop" during early development if you want fresh tables on every restart
+      # NEVER use "update" or "create-drop" in production — use Flyway/Liquibase instead
+      ddl-auto: update
+    show-sql: true           # Print SQL queries to console (great for learning)
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true     # Pretty-print the SQL
+
+# Our custom JWT settings (not a Spring property — we read these manually)
+jwt:
+  secret: YourSuperSecretKeyThatIsAtLeast256BitsLongForHS256Algorithm123!
+  expiration: 86400000       # 24 hours in milliseconds
