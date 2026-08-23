@@ -37,9 +37,15 @@ public class SecurityConfig {
 
                 // Define which endpoints are public vs protected
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()   // Login & register = public
-                        .requestMatchers("/ws/**").permitAll()          // WebSocket endpoint = public
-                        .anyRequest().authenticated()                   // Everything else = need JWT
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/ws/**").permitAll()
+                        // ── Allow Swagger without auth ──
+                        .requestMatchers(
+                                "/swagger-ui.html",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
+                        .anyRequest().authenticated()
                 )
 
                 // Add our JWT filter BEFORE Spring's default auth filter

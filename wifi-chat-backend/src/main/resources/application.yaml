@@ -28,3 +28,13 @@ spring:
 jwt:
   secret: YourSuperSecretKeyThatIsAtLeast256BitsLongForHS256Algorithm123!
   expiration: 86400000       # 24 hours in milliseconds
+
+
+# Add to your existing application.yml
+springdoc:
+  api-docs:
+    path: /v3/api-docs           # Raw OpenAPI JSON spec
+  swagger-ui:
+    path: /swagger-ui.html       # Interactive UI
+    tags-sorter: alpha            # Sort tags alphabetically
+    operations-sorter: method     # Sort by HTTP method (GET, POST, etc.)
