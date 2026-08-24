@@ -24,7 +24,6 @@ One machine acts as the host server, and any device connected to the same WiFi r
 **Database & DevOps:**
 - **PostgreSQL 15** (Persistent storage with indexes)
 - **Docker & Docker Compose** (Multi-stage builds, container orchestration)
-- **Nginx** (Reverse proxy for API & WebSocket)
 - **Swagger / OpenAPI 3** (API Documentation)
 
 ---
