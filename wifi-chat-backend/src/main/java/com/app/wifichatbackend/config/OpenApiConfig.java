@@ -1,6 +1,5 @@
 package com.app.wifichatbackend.config;
 
-
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
@@ -13,11 +12,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class OpenApiConfig {
+    private static final String SECURITY_SCHEME_NAME = "bearerAuth";
 
     @Bean
     public OpenAPI wifiChatOpenAPI() {
         return new OpenAPI()
-                // ── API Metadata (shows at the top of Swagger UI) ──
                 .info(new Info()
                         .title("WiFi Chat API")
                         .description("Real-time offline chat system over local WiFi. "
@@ -30,14 +29,11 @@ public class OpenApiConfig {
                         .license(new License()
                                 .name("MIT License")
                                 .url("https://opensource.org/licenses/MIT")))
-
-                // ── JWT Authentication in Swagger ──
-                // This adds the "Authorize 🔒" button in the Swagger UI
-                .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))
+                .addSecurityItem(new SecurityRequirement().addList(SECURITY_SCHEME_NAME))
                 .components(new Components()
-                        .addSecuritySchemes("Bearer Authentication",
+                        .addSecuritySchemes(SECURITY_SCHEME_NAME,
                                 new SecurityScheme()
-                                        .name("Bearer Authentication")
+                                        .name("Authorization")
                                         .type(SecurityScheme.Type.HTTP)
                                         .scheme("bearer")
                                         .bearerFormat("JWT")
