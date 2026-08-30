@@ -21,6 +21,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;    // BCrypt from SecurityConfig
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
+    private final ChatService chatService;
 
     // ──────────────────────────────────────────────
     //  REGISTER: Create a new user
@@ -73,6 +74,7 @@ public class AuthService {
         // If we get here, authentication was successful
         // Generate a JWT token for this user
         String token = jwtTokenProvider.generateToken(request.getUsername());
+        chatService.setUserOnline(request.getUsername());
 
         return new AuthResponse(token, "Bearer", request.getUsername());
     }
