@@ -1,6 +1,7 @@
 package com.app.wifichatbackend.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
@@ -9,6 +10,12 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 @Configuration
 @EnableWebSocketMessageBroker    // Enables WebSocket with STOMP message broker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
+
+    private final com.app.wifichatbackend.security.JwtStompAuthChannelInterceptor jwtStompAuthChannelInterceptor;
+
+    public WebSocketConfig(com.app.wifichatbackend.security.JwtStompAuthChannelInterceptor jwtStompAuthChannelInterceptor) {
+        this.jwtStompAuthChannelInterceptor = jwtStompAuthChannelInterceptor;
+    }
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -37,5 +44,10 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.addEndpoint("/ws/chat")
                 .setAllowedOriginPatterns("*")   // Allow connections from any device on the network
                 .withSockJS();                    // Enable SockJS fallback for browsers that don't support WebSocket
+    }
+
+    @Override
+    public void configureClientInboundChannel(ChannelRegistration registration) {
+        registration.interceptors(jwtStompAuthChannelInterceptor);
     }
 }
