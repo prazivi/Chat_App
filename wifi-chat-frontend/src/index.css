@@ -1,3 +1,6 @@
+* { box-sizing: border-box; }
+html, body, #root { min-height: 100%; margin: 0; }
+body { min-width: 320px; background: #f5f7f2; font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
 :root {
   --text: #6b6375;
   --text-h: #08060d;
